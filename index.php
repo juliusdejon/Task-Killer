@@ -58,21 +58,25 @@ $( document ).load( 'index.php' );
 
 			<?php
 			include "connection.php";
-			$sql = "SELECT * FROM task";
+			$sql = "SELECT * FROM task ORDER BY id DESC";
 			$res = $mysqli->query($sql);
+			$count = mysqli_num_rows($res);
+			$i = 0;
 			 while($rows=mysqli_fetch_assoc($res))
 			 {
+			
+			 	$i++;
 			 	$id=$rows['id'];
 			 	$task = $rows['task'];
 			 ?>
 			 <tr>
-			 <td><?php echo $id;?></td>
+			<td><?php echo $i; ?></td>
 			 <td><?php echo $task;?></td>
 			 <td><a class="btn btn-info btn-md" data-toggle="modal" data-target="#<?php echo $id?>">Edit</button>
 
 			  <a href="delete.php?id=<?php echo $id;?>" class="btn btn-danger">Delete</a></td>
 			 </tr>
-			<?php }?>
+			<?php } ?>
 		</tbody>
 	</table>
   </div>
@@ -119,7 +123,7 @@ while($row = mysqli_fetch_assoc($res))
         <h4 class="modal-title">Edit: <?php echo $task; ?></h4>
       </div>
       <div class="modal-body">
-        <form action="" method="post">
+        <form action="index.php" method="post">
         	<div class="row">
         	<div class="col-md-2">
 			Task: </div>
@@ -127,17 +131,37 @@ while($row = mysqli_fetch_assoc($res))
 			<input type="text" name="modalTask" class="form-control" value="<?php echo $task;?>">
 			</div>
 			<div class="col-md-2">
-			<input type="hidden" name="modalId">
+			<input type="hidden" name="modalId" value="<?php echo $idModal;?>">
 			<input type="submit" name="modalSubmit" class="btn btn-success" value="Edit">
 
 			</div>
 			</div>
        </form>
+       <?php 
+if(isset($_POST['modalSubmit']))
+{
+	echo $modalTask;
+	echo $modalId;
+	$modalTask=$_POST['modalTask'];
+	$modalId = $_POST['modalId'];
+
+	$sql = "UPDATE task SET task ='$modalTask' WHERE id ='$modalId'";
+	$mysqli->query($sql);
+	header('Location: index.php');
+
+}
+
+
+
+
+?>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
+
+
 
   </div>
 </div>
@@ -147,22 +171,6 @@ while($row = mysqli_fetch_assoc($res))
 
 
 
-
-<?php 
-if(isset($_POST['modalSubmit']))
-{
-	$modalTask=$_POST['modalTask'];
-	$modalId = $_POST['modalId'];
-
-	$sql = "UPDATE `task` SET `task`='$modalTask' WHERE 'id' ='$modalId'";
-	$mysqli->query($sql);
-
-}
-
-
-
-
-?>
 <script type="text/javascript" src="node_modules/bootstrap-3.3.7-dist/js/bootstrap.min.js">
 	
 </script>
