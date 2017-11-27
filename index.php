@@ -5,9 +5,7 @@ if(isset($_POST['submit']))
 	$task =$_POST['task'];
 	$sql = "INSERT INTO `task` (`id`, `task`) VALUES (NULL, '$task')";
 	$mysqli->query($sql);
-	echo "<script>
-$( document ).load( 'index.php' );
-	</script>";
+	
 }
 
 
@@ -24,14 +22,55 @@ $( document ).load( 'index.php' );
 	<meta charset="UTF-8">
 	<title>Todo App 1.0.0</title>
 </head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <link rel="stylesheet" type="text/css" href="css/main.css">
 <link rel="stylesheet" type="text/css" href="node_modules/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-<script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="node_modules/fonts/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="node_modules/fonts/css/font-awesome.css">
+<!-- PNotify -->
+<link href="node_modules/pnotify/dist/pnotify.css" rel="stylesheet">
+<link href="node_modules/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+<link href="node_modules/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+ 
+  <!--SWEET ALERT PLUGIN-->
+<script src="node_modules/sweetalert-master/dist/sweetalert.min.js"></script>
+<link rel="stylesheet" type="text/css" href="plugin/sweetalert-master/dist/sweetalert.css">
 <body>
+	<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Prime Exam</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    
+    
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-clog"></i> <i class="fa fa-sign-out" aria-hidden="true"></i></a>
+          <ul class="dropdown-menu">
+        	
+            <li><a href="#">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
 <div class="container">
 	<div class="container-fluid">
 		<div class="panel panel-default">
-  <div class="panel-heading">Dashboard</div>
+  <div class="panel-heading">Tasks</div>
   <div class="panel-body">
 	<form action="" method="post">
 	<div class="col-md-2">
@@ -48,7 +87,7 @@ $( document ).load( 'index.php' );
 </form>
 
 	
-	<table class="table">
+	<table class="table" id="dashboardTable">
 		<thead>
 			<th>#</th>
 			<th>Task</th>
@@ -94,14 +133,6 @@ $( document ).load( 'index.php' );
 
 ?>
 
-<!-- test -->
-<!-- <script>
-$(document).ready(function()
-{
-alert ('asd');
-});
-</script> -->
-
 
 <!-- Modal -->
 <?php
@@ -123,7 +154,7 @@ while($row = mysqli_fetch_assoc($res))
         <h4 class="modal-title">Edit: <?php echo $task; ?></h4>
       </div>
       <div class="modal-body">
-        <form action="index.php" method="post">
+        <form action="edit.php" method="post" id="Edit">
         	<div class="row">
         	<div class="col-md-2">
 			Task: </div>
@@ -132,30 +163,40 @@ while($row = mysqli_fetch_assoc($res))
 			</div>
 			<div class="col-md-2">
 			<input type="hidden" name="modalId" value="<?php echo $idModal;?>">
-			<input type="submit" name="modalSubmit" class="btn btn-success" value="Edit">
+			<input type="submit" name="modalSubmit" class="btn btn-success" value="Edit" onclick="myFunction()">
+		
+			</div>
+			</div>
 
-			</div>
-			</div>
        </form>
-       <?php 
+       <script>
+function myFunction() {
+    location.reload();
+}
+</script>
+
+
+<script type="text/javascript" src="edit.js"></script>
+   <!--     <?php 
 if(isset($_POST['modalSubmit']))
 {
-	echo $modalTask;
-	echo $modalId;
+
 	$modalTask=$_POST['modalTask'];
 	$modalId = $_POST['modalId'];
 
 	$sql = "UPDATE task SET task ='$modalTask' WHERE id ='$modalId'";
 	$mysqli->query($sql);
-	header('Location: index.php');
-
+	echo "<script>window.location.href('index.php');</script>";
+	
 }
 
 
 
 
-?>
+
+?> -->
       </div>
+      <div id="result"></div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
@@ -174,3 +215,7 @@ if(isset($_POST['modalSubmit']))
 <script type="text/javascript" src="node_modules/bootstrap-3.3.7-dist/js/bootstrap.min.js">
 	
 </script>
+<!-- <script src="node_modules/js/jquery.min.js"> </script> -->
+        <script src="node_modules/pnotify/dist/pnotify.js"></script>
+                                <script src="node_modules/pnotify/dist/pnotify.buttons.js"></script>
+                                <script src="node_modules/pnotify/dist/pnotify.nonblock.js"></script>
