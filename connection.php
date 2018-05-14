@@ -1,5 +1,3 @@
 <?php 
-$mysqli = new mysqli('localhost','root','','primedb');
-
-
+$mysqli = new mysqli('localhost','root','','prime');
 ?>
