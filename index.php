@@ -125,7 +125,7 @@ while($row = mysqli_fetch_assoc($res))
         <h4 class="modal-title">Edit: <?php echo $task; ?></h4>
       </div>
       <div class="modal-body">
-        <form action="edit.php" method="post" id="Edit">
+        <form id="Edit" method="post" action="edit.php">
         	<div class="row">
         	<div class="col-md-2">
 			Task: </div>
@@ -134,7 +134,7 @@ while($row = mysqli_fetch_assoc($res))
 			</div>
 			<div class="col-md-2">
 			<input type="hidden" name="modalId" value="<?php echo $idModal;?>">
-			<input type="submit" name="modalSubmit" class="btn btn-success" value="Edit" onclick="myFunction()">
+			<input type="submit" name="modalSubmit" class="btn btn-success" value="Edit">
 		
 			</div>
 			</div>
@@ -142,7 +142,7 @@ while($row = mysqli_fetch_assoc($res))
       </div>
       <div id="result"></div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
       </div>
     </div>
   </div>
@@ -150,3 +150,6 @@ while($row = mysqli_fetch_assoc($res))
 <?php 
 }
 ?>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+<script src="js/edit.js"></script>
