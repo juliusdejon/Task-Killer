@@ -11,5 +11,4 @@ else{
 	$sql = "UPDATE task SET task ='$modalTask' WHERE id ='$modalId'";
 	$mysqli->query($sql);
 	echo "updated";
-	echo"<script>window.document.href('index.php');</script>";
 	}
